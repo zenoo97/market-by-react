@@ -14,7 +14,6 @@ function App() {
           <Link to={"/"}>
             <img src="./images (2)/images/icons/logo.png" alt="" />
           </Link>
-
           <Button
             size="20"
             onClick={() => {
