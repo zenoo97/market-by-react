@@ -2,14 +2,17 @@ import "./index.css";
 import axios from "axios";
 import React from "react";
 import { Link } from "react-router-dom";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 
+dayjs.extend(relativeTime);
 const MainPage = () => {
   const [products, setProducts] = React.useState([]);
   React.useEffect(() => {
     axios
       .get("http://localhost:8080/products")
       .then((result) => {
-        const products = result.data.products;
+        const products = result.data.product;
         setProducts(products);
       })
       .catch((error) => {
@@ -34,13 +37,18 @@ const MainPage = () => {
                   <span className="product-name">{product.name}</span>
                   <span className="product-price">{product.price}원</span>
                 </div>
-                <div className="product-seller">
-                  <img
-                    className="product-avatar"
-                    src="./images/icons/avatar.png"
-                    alt=""
-                  />
-                  <span>{product.seller}</span>
+                <div className="product-footer">
+                  <div className="product-seller">
+                    <img
+                      className="product-avatar"
+                      src="./images/icons/avatar.png"
+                      alt=""
+                    />
+                    <span>{product.seller}</span>
+                  </div>
+                  <span className="product-date">
+                    {dayjs(product.createdAt).fromNow()}
+                  </span>
                 </div>
               </Link>
             </div>
@@ -51,3 +59,5 @@ const MainPage = () => {
   );
 };
 export default MainPage;
+
+// dayjs: 시간 계산 라이브러리
